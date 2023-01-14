@@ -1,0 +1,15 @@
+.scene {
+  canvas {
+    border-image-source: linear-gradient(180deg, #3d1b74 0%, #9a78d0 77.08%);
+    border-radius: inherit;
+  }
+
+  background: linear-gradient(180deg, #3d1b74 0%, #9a78d0 77.08%);
+  border-radius: 20px;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 2px;
+  position: relative;
+}

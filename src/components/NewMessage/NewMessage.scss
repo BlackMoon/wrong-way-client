@@ -1,0 +1,41 @@
+.new-message {
+  display: flex;
+  height: 40px;
+  justify-content: space-between;
+  &__Send {
+    .glyph {
+      background: radial-gradient(
+        47.48% 60% at 50.3% 100%,
+        rgba(255, 255, 255, 0.65) 0%,
+        rgba(178, 89, 248, 0.77) 40.62%,
+        rgba(137, 89, 248, 0.01) 100%
+      );
+      height: 40px;
+      width: 155px;
+    }
+    background: linear-gradient(
+      180deg,
+      #995aff -7.69%,
+      rgba(108, 58, 252, 0.91) 127.88%
+    );
+    border-radius: 4px;
+    color: #fffafa;
+    font-weight: 800;
+    font-size: 18px;
+    height: 40px;
+    line-height: 20px;
+    width: 117px;
+  }
+  &__Text {
+    background: #180c3c;
+    display: flex;
+    height: 100%;
+    width: 297px;
+  }
+  &__TextOut {
+    border: 5px solid;
+    border-image-source: linear-gradient(180deg, #1f115b 0%, #e5d7ff 100%);
+    height: 40px;
+    width: 297px;
+  }
+}

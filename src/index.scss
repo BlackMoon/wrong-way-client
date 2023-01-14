@@ -1,0 +1,32 @@
+html,
+body {
+  font-family: Saira, sans-serif;
+}
+
+body {
+  background: linear-gradient(0deg, #080817, #080817),
+    linear-gradient(
+      234.36deg,
+      rgba(12, 12, 76, 0.5) 2.69%,
+      rgba(6, 6, 6, 0) 43.67%
+    ),
+    radial-gradient(
+      168.67% 168.67% at 48.89% 54.41%,
+      rgba(78, 32, 130, 0.5) 0%,
+      rgba(12, 12, 76, 0.5) 71.88%
+    );
+  display: flex;
+
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  margin: 42px 0 34px 0;
+  width: 1120px;
+}
