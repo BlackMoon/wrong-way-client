@@ -6,7 +6,7 @@ import './ControlPanel.scss';
 
 export const ControlPanel = () => {
   return (
-    <footer className="control-panel">
+    <footer className="control-panel" data-testid="control-panel">
       <Score />
       <div className="wrapper">
         <Messages />

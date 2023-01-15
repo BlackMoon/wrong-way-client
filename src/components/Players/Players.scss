@@ -1,4 +1,20 @@
 .players {
+  &__header {
+    background: linear-gradient(
+        0deg,
+        rgba(19, 20, 68, 0.5),
+        rgba(19, 20, 68, 0.5)
+      ),
+      radial-gradient(
+        101.35% 101.35% at 50% 22.11%,
+        rgba(34, 21, 49, 0.5) 0%,
+        rgba(22, 22, 48, 0.5) 71.87%
+      );
+      color: #FFFFFF;
+      display: flex;
+      height: 29px;
+      padding: 4px 16px;
+  }
   background: rgba(16, 12, 74, 0.2);
   box-shadow: inset 3px 4px 63px rgba(255, 255, 255, 0.25);
   border-radius: 12px;

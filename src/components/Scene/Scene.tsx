@@ -1,52 +1,81 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import * as PIXI from 'pixi.js';
-import { AnimatedSprite, Container, Sprite, Stage } from '@inlet/react-pixi';
-
+import { Container, Stage } from '@inlet/react-pixi';
 
 import './Scene.scss';
 
-import mountain_left from '../../assets/mountain_left.png';
-import mountain_right from '../../assets/mountain_right.png';
-import road from '../../assets/road.png';
-import sky from '../../assets/sky.png';
-import sideroad_left from '../../assets/sideroad_left.png';
-import sideroad_right from '../../assets/sideroad_right.png';
 import { Road } from '../Road/Road';
+import { Car } from '../Car/Car';
+import { IPointData } from 'pixijs';
+import { Move } from '../../types';
+import { Enemy } from '../Enemy/Enemy';
+import { Blast } from '../Blast/Blast';
+import { observer } from 'mobx-react-lite';
+import { CarStore, withStore } from '../../stores';
+import { NewGame } from '../NewGame/NewGame';
+
+const OFFSET = 8;
 
 interface SceneProps {
-  prop1?: string;
+  store: CarStore;
 }
 
-const texture1 = PIXI.Texture.from('../../assets/sideroad_left.png');
-const texture2 = PIXI.Texture.from('../../assets/sideroad_left.png');
-
-const SceneIntl: FC<SceneProps> = ({}) => {
-  const mainRef = useRef<HTMLDivElement>(null);
-
+const SceneIntl: FC<SceneProps> = ({ store }) => {
   const [size, setSize] = useState<PIXI.ISize>({
     width: 0,
     height: 0,
   });
 
+  const { crash, gameRunning, enemyDistance, enemyMove, newgame, setCarMove } = store;
+  const [carPos, setCarPos] = useState<IPointData>({ x: 0, y: 0 });
+  const [enemyPos, setEnemyPos] = useState<IPointData>({ x: 0, y: 0 });
+  const [move, setMove] = useState<Move[]>([Move.Center]);
+
+  const mainRef = useRef<HTMLDivElement>(null);
+
+  const handleKeyDown = useCallback(
+    (event) => {
+      if (event.code === 'ArrowLeft') {
+        setCarMove(Move.Left);
+        setMove([Move.Left]);
+      } else if (event.code === 'ArrowRight') {
+        setCarMove(Move.Right);
+        setMove([Move.Right]);
+      }
+    },
+    [move],
+  );
+
+  const handleNewGame = useCallback(() => {
+    newgame();
+    mainRef.current?.focus();
+    setMove([Move.Center]);
+  }, [mainRef]);
+
   useEffect(() => {
     function handleResize() {
       if (mainRef.current) {
         const { clientHeight, clientWidth } = mainRef.current;
-        const dim = { width: clientWidth, height: clientHeight };
-        setSize(dim);
-        console.log(
-          dim,
-          Math.ceil(dim.height / 2),
-          mainRef.current.getBoundingClientRect(),
-        );
+        const size = { width: clientWidth, height: clientHeight };
+        setSize(size);
+        setCarPos({ x: size.width / 2, y: size.height - OFFSET });
+        setEnemyPos({ x: size.width / 2, y: (2 * size.height) / 3 });
+        mainRef.current.focus();
       }
     }
     window.onresize = handleResize;
     handleResize();
   }, [mainRef]);
 
-  return (
-    <main className="scene" ref={mainRef}>
+  return (<>
+    {!gameRunning && <NewGame click={handleNewGame}/>}
+    <main
+      className="scene"
+      data-testid="scene"
+      ref={mainRef}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+    >
       <Stage
         height={size.height}
         width={size.width}
@@ -56,31 +85,20 @@ const SceneIntl: FC<SceneProps> = ({}) => {
         }}
       >
         <Container>
-          <Road size={size}></Road>
-          <Sprite
-            image={sideroad_left}
-            y={size.height / 2}
-            height={size.height}
-            scale={0.15}
-          ></Sprite>
-          <AnimatedSprite
-           
-           animationSpeed={0.5}
-           isPlaying={true}
-           textures={[texture1, texture2]}
-           anchor={0.5}
-          ></AnimatedSprite>
-          {/* <Sprite
-            image={mountain_left}
-           
-            
-            height={dim.height}
-            scale={0.15}
-          ></Sprite> */}
+          <Road crash={crash} size={size}></Road>
+          {crash ? (
+            <Blast pos={carPos} />
+          ) : (
+            <>
+              <Car pos={carPos} move={move} />
+              <Enemy pos={enemyPos} distance={enemyDistance} move={enemyMove} />
+            </>
+          )}
         </Container>
       </Stage>
     </main>
+    </>
   );
 };
 
-export const Scene = SceneIntl;
+export const Scene = withStore(observer(SceneIntl));

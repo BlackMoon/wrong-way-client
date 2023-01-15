@@ -1,0 +1,19 @@
+.new-game-btn {
+  margin: auto;
+  position: absolute;
+  left: 50%;
+  top: 30%;
+  transform: translate(-50%, -50%);
+  background: linear-gradient(
+    180deg,
+    #995aff -7.69%,
+    rgba(108, 58, 252, 0.91) 127.88%
+  );
+  border-radius: 4px;
+  color: #fffafa;
+  font-weight: 800;
+  font-size: 18px;
+  height: 40px;
+  width: 240px;
+  z-index: 100;
+}
