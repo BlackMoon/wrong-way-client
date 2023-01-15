@@ -7,7 +7,7 @@
 ### Start Game
 
 1. Click Start New Game
-2. Move your car using keyboard [Left, Right] to avoid collisions with an oncoming vehicle
+2. Move your car using keyboard [Left, Right] to avoid collisions with an oncoming car.
 
 ![screen](./wrong_way.png)
 
