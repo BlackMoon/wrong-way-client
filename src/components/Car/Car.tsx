@@ -42,7 +42,7 @@ export const Car: FC<CarProps> = ({ pos, move = [Move.Center] }) => {
   useEffect(() => {
     const [m] = move ?? Move.Center;
     setCarMove(m);
-    const timer = setTimeout(() => setCarMove(Move.Center), 300);
+    const timer = setTimeout(() => setCarMove(Move.Center), 200);
     return () => clearTimeout(timer);
   }, [move]);
 
