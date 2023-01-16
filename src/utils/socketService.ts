@@ -15,7 +15,7 @@ class WssSocketService implements SocketService {
     this.url = url;
   }
 
-  connect = (): Promise<void> => {
+  connect = <T = any>(subscriber?: (data: T) => void): Promise<void> => {
     if (this.socket && this.socket.readyState !== WebSocket.CLOSED) {
       return Promise.resolve();
     }
@@ -24,6 +24,9 @@ class WssSocketService implements SocketService {
       const socket = new WebSocket(this.url);
       socket.onopen = () => resolve();
       socket.onerror = (e) => reject(e);
+      if (subscriber) {
+        socket.onmessage = ({ data }) => subscriber(data);
+      }
       this.socket = socket;
     });
   };

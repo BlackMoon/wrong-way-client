@@ -43,9 +43,13 @@ export class CarStore {
 
   connect = () => {
     this.error = undefined;
-    WssSocketServiceInstance.connect().catch(() =>
+    WssSocketServiceInstance.connect(this.subscriber).catch(() =>
       this.setError(new Error('connection to server failed')),
     );
+  };
+
+  subscriber = (data: number) => {
+    /* get enemy car position*/
   };
 
   close = () => WssSocketServiceInstance.close();
